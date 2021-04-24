@@ -21,3 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get("/", function(){
     return response()->json(["api" => "API REST-FUll de la libreria PDF"]);
 });
+
+
+
+Route::apiResource('productos', App\Http\Controllers\ProductoController::class);
