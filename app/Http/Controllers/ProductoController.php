@@ -38,7 +38,9 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $producto = Prducto::create($input);
+        return response()->json(["res" => true, "message" => "Registrado correctamente!"], 200);
     }
 
     /**
@@ -62,7 +64,10 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        $input = $request->all();
+        $producto->udpate($input);
+        return response()->json(["res" => true, "message" => "Actualizado correctamente!"], 200);
     }
 
     /**
@@ -73,6 +78,23 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Producto::destroy($id);
+        return response()->json(["res" => true, "message" => "Eliminado correctamente!"], 200);
+    }
+
+    public function setLike($id)
+    {
+        $producto = Producto::find($id);
+        $producto->like = $producto->like + 1;
+        $producto->save();
+        return response()->json(["res" => true, "message" => "Like correcto!"], 200);
+    }
+
+    public function setDisLike($id)
+    {
+        $producto = Producto::find($id);
+        $producto->dislike = $producto->dislike + 1;
+        $producto->save();
+        return response()->json(["res" => true, "message" => "Dislike correcto!"], 200);
     }
 }
