@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Producto;
+use App\Http\Requests\CreateProductoRequest;
+use App\Http\Requests\UpdateProductoRequest;
 
 use Illuminate\Http\Request;
 
@@ -36,7 +38,7 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProductoRequest $request)
     {
         $input = $request->all();
         //TODO recoger el usuario autenticado
@@ -64,7 +66,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductoRequest $request, $id)
     {
         $producto = Producto::findOrFail($id);
         
@@ -99,5 +101,19 @@ class ProductoController extends Controller
         $producto->dislike = $producto->dislike + 1;
         $producto->save();
         return response()->json(["res" => true, "message" => "Dislike correcto!"], 200);
+    }
+
+    private function cargarImagen($file, $id){
+        $nombreArchivo = time() . "_{$id}." . $file->getClientOriginalExtension();
+        $file->move(public_path('imagenes'), $nombreArchivo);
+        return $nombreArchivo;
+    }
+
+    public function setImagen(Request $request, $id)
+    {
+        $producto = Producto::find($id);
+        $producto->url_imagen = $this->cargarImagen($request->imagen, $id);
+        $producto->save();
+        return response()->json(["res" => true, "message" => "Imagen cargada correctamente!"], 200);
     }
 }
