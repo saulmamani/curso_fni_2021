@@ -39,7 +39,9 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        $producto = Prducto::create($input);
+        //TODO recoger el usuario autenticado
+        $input['user_id'] = 1;
+        $producto = Producto::create($input);
         return response()->json(["res" => true, "message" => "Registrado correctamente!"], 200);
     }
 
@@ -65,8 +67,9 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         $producto = Producto::findOrFail($id);
+        
         $input = $request->all();
-        $producto->udpate($input);
+        $producto->update($input);
         return response()->json(["res" => true, "message" => "Actualizado correctamente!"], 200);
     }
 

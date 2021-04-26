@@ -12,15 +12,15 @@ class Producto extends Model
     protected $table = "productos";
 
     protected $fillable = [
-        'id',
-        'codigo',
-        'nombre',
-        'descripcion',
-        'precio',
-        'url_imagen',
-        'like',
-        'dislike',
-        'user_id'
+        "id",
+        "codigo",
+        "nombre",
+        "descripcion",
+        "precio",
+        "url_imagen",
+        "like",
+        "dislike",
+        "user_id"
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'user_id']; 
