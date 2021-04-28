@@ -23,7 +23,7 @@ Route::get("/", function(){
 });
 
 
-Route::post('login', 'UserController@login');
+Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
 
 
 Route::group(['middleware' => 'auth:api'], function () {
@@ -33,6 +33,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('set_dislike/{id}', [App\Http\Controllers\ProductoController::class, 'setDislike'])->name('set_dislike');
     Route::put('set_imagen/{id}', [App\Http\Controllers\ProductoController::class, 'setImagen'])->name('set_imagen');
 
-    Route::post('logout', 'UserController@logout');
+    Route::post('logout', [\App\Http\Controllers\UserController::class, 'logout']);
 
 });

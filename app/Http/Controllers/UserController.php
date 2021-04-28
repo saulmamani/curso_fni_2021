@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use Psy\Util\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -34,8 +36,6 @@ class UserController extends Controller
         $user = auth()->user();
         $user->api_token = null;
         $user->save();
-
-        auth()->logout();
 
         return response()->json([
             'res' => true,
